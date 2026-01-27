@@ -1,0 +1,303 @@
+
+
+/* =========================================
+   1. DEĞİŞKENLER VE TEMEL AYARLAR
+   ========================================= */
+:root {
+    --primary-dark: #1f282e;
+    --gold: #b39359; 
+    --gold-hover: #c9ac76;
+    --text-gray: #8e9196;
+    --white: #ffffff;
+    --glass-white: rgba(255, 255, 255, 0.02);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body { 
+    font-family: 'Montserrat', sans-serif; 
+    background: #fff; 
+    scroll-behavior: smooth; 
+    color: var(--primary-dark); 
+}
+
+/* Linklerin varsayılan alt çizgisini kaldır */
+a { text-decoration: none; }
+ul { list-style: none; }
+
+/* =========================================
+   2. WORDPRESS ADMIN BAR DÜZELTMESİ
+   ========================================= */
+body.admin-bar .premium-header { top: 32px; }
+
+@media screen and (max-width: 782px) {
+    body.admin-bar .premium-header { top: 46px; }
+}
+
+/* =========================================
+   3. HEADER VE NAVİGASYON
+   ========================================= */
+.premium-header {
+    position: fixed;
+    top: 0; width: 100%; z-index: 9999;
+    transition: all 0.4s ease-in-out; /* Geçiş süresi */
+    
+    /* BAŞLANGIÇ HALİ: ŞEFFAF */
+    background: transparent; 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Çok hafif çizgi */
+}
+
+/* --- SCROLL EDİLİNCE DEVREYE GİREN CLASS --- */
+/* JavaScript bu class'ı eklediğinde şunlar olur: */
+.header-scrolled {
+    background: var(--primary-dark) !important; /* SİYAH OLUR */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5); /* Gölge eklenir */
+    padding-top: 0;
+    border-bottom: none;
+}
+
+/* Scroll edilince üstteki ince bilgi barını gizle (Daha modern görünüm için) */
+.header-scrolled .header-top {
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.header-top {
+    color: var(--white);
+    padding: 10px 10%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    letter-spacing: 2px;
+    border-bottom: 1px solid rgba(179, 147, 89, 0.15);
+    font-weight: 400;
+    transition: 0.3s; /* Kaybolurken animasyonlu olsun */
+}
+.header-top i { color: var(--gold); margin-right: 5px; }
+
+.main-nav {
+    padding: 20px 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.5s ease;
+    gap: 20px;
+}
+
+/* Scroll halinde menü padding'ini biraz kısıyoruz */
+.header-scrolled .main-nav {
+    padding: 15px 10%;
+}
+
+.logo-box { 
+    text-align: center; 
+    flex-shrink: 0;
+    max-width: 280px;
+    margin-right: 20px;
+}
+.logo-box a { 
+    color: var(--gold); 
+    font-family: 'Bodoni Moda', serif; 
+    font-size: 32px; font-weight: 700; 
+    letter-spacing: -1px; transition: 0.3s;
+    display: inline-block;
+}
+.logo-image {
+    height: 35px;
+    width: auto;
+    max-width: 120px;
+    object-fit: contain;
+    transition: 0.3s;
+    display: block;
+    visibility: visible;
+}
+.logo-link {
+    display: inline-block;
+    line-height: 0;
+    text-decoration: none;
+}
+.logo-sub { 
+    display: block; font-size: 10px; color: var(--white); 
+    letter-spacing: 6px; margin-top: 5px; text-transform: uppercase; 
+    opacity: 0.8;
+}
+
+/* Menü Linkleri */
+.nav-links { 
+    display: flex; 
+    gap: 45px; 
+    margin: 0; 
+    flex: 1;
+    justify-content: center;
+    flex-wrap: nowrap;
+}
+.nav-links li { list-style: none; }
+
+.nav-links a {
+    color: var(--white);
+    font-size: 11px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 2px; position: relative; transition: 0.3s;
+    opacity: 0.85;
+}
+
+.nav-links a::after {
+    content: ''; position: absolute; bottom: -8px; left: 0;
+    width: 0; height: 1.5px; background: var(--gold); transition: 0.5s ease;
+}
+.nav-links a:hover { opacity: 1; color: var(--gold); }
+.nav-links a:hover::after { width: 100%; }
+
+.nav-links .current-menu-item a { color: var(--gold); opacity: 1; }
+.nav-links .current-menu-item a::after { width: 100%; }
+
+.header-action {
+    flex-shrink: 0;
+}
+.header-action a {
+    padding: 14px 28px; border: 1.5px solid var(--gold); 
+    color: var(--gold); font-size: 11px; 
+    font-weight: 700; letter-spacing: 2.5px; transition: 0.4s;
+    display: inline-block;
+    white-space: nowrap;
+}
+.header-action a:hover { 
+    background: var(--gold); color: var(--primary-dark); 
+    box-shadow: 0 0 20px rgba(179, 147, 89, 0.3); 
+}
+
+/* =========================================
+   4. GENEL DÜZEN (MAIN) - KRİTİK DEĞİŞİKLİK
+   ========================================= */
+main { 
+    min-height: 800px;
+    padding-top: 0; /* Header şeffaf olduğu için içeriği yukarı çekiyoruz */
+}
+
+/* =========================================
+   5. FOOTER ALANI
+   ========================================= */
+.premium-footer {
+    background: var(--primary-dark);
+    color: var(--white);
+    padding: 120px 10% 40px;
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid rgba(179, 147, 89, 0.1);
+}
+
+.premium-footer::before {
+    content: 'JUSTITIA';
+    position: absolute; top: 5%; right: -2%;
+    font-family: 'Bodoni Moda'; font-size: 18vw;
+    color: rgba(255,255,255,0.015); font-weight: 900; pointer-events: none;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+    gap: 60px;
+    position: relative; z-index: 1;
+}
+
+.footer-col h4 {
+    color: var(--gold);
+    font-family: 'Bodoni Moda', serif;
+    font-size: 22px; margin-bottom: 35px;
+    font-weight: 700; position: relative;
+}
+
+.footer-col h4::after {
+    content: ''; position: absolute; bottom: -12px; left: 0;
+    width: 40px; height: 1px; background: var(--gold); opacity: 0.5;
+}
+
+.footer-col p { 
+    color: var(--text-gray); line-height: 1.9; font-size: 14px; margin-bottom: 15px; 
+}
+
+.footer-links li { margin-bottom: 18px; }
+.footer-links a { 
+    color: var(--text-gray); 
+    transition: 0.4s ease; font-size: 13px; letter-spacing: 0.5px;
+}
+.footer-links a:hover { 
+    color: var(--gold); transform: translateX(8px); display: inline-block; 
+}
+
+.contact-info-list li { display: flex; margin-bottom: 25px; align-items: flex-start; gap: 15px; }
+.contact-info-list i { color: var(--gold); font-size: 16px; margin-top: 4px; opacity: 0.9; }
+
+.footer-bottom {
+    margin-top: 100px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255,255,255,0.03);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: #4a4d52;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.social-icons { display: flex; gap: 15px; margin-top: 25px; }
+.social-icons a { 
+    width: 42px; height: 42px; border: 1px solid rgba(179, 147, 89, 0.2);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold); border-radius: 50%; transition: 0.5s;
+}
+.social-icons a:hover { 
+    background: var(--gold); color: var(--primary-dark); 
+    border-color: var(--gold); transform: translateY(-5px); 
+}
+
+/* =========================================
+   6. RESPONSIVE
+   ========================================= */
+@media (min-width: 1025px) {
+    .logo-box {
+        max-width: 250px;
+        margin-right: 30px;
+    }
+    .nav-links {
+        gap: 35px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .header-top { 
+        display: none !important; 
+        visibility: hidden !important;
+        height: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow: hidden !important;
+    }
+    .main-nav { 
+        padding: 20px 5%; 
+        justify-content: center !important;
+    }
+    .nav-links { display: none !important; }
+    .header-action { display: none !important; }
+    .logo-image {
+        height: 48px !important;
+        max-width: 100px !important;
+    } 
+    
+    /* Mobilde her zaman siyah olsun okunabilirlik için */
+    .premium-header { background: var(--primary-dark) !important; }
+    main { padding-top: 100px; } /* Mobilde içerik aşağı insin */
+}
+
+@media (max-width: 768px) {
+    .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+    .premium-footer { padding: 60px 5% 30px; }
+    .footer-bottom { flex-direction: column; gap: 15px; text-align: center; }
+    .logo-box{
+        margin-right: 0px;
+    }
+}
